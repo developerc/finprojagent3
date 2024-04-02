@@ -19,5 +19,6 @@ cd grpc
 C:\proj\Go\Exam\finprojorchestr3\grpc> go mod init grpc
 заполнил srv.go и подтянул зависимости
 go mod tidy
+в файле go.mod
 replace grpc => ./grpc/
-go get grpc
+~/proj/Go/Exam/finprojagent3$ go get grpc

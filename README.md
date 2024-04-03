@@ -12,6 +12,14 @@ mkdir grpc
 grpc/client/clnt.go
 grpc/server/srv.go
 залил на github
+////
+Важно!! в файле grpc.proto строка 2
+package finproj; // название пакета
+должна совпадать со строкой в файле grpc.proto на оркестраторе, иначе запросы от агента не доходят до оркестратора даже при правильных IP и port
+и строка 3
+option go_package = "github.com/developerc/finprojagent3/proto";
+должна соответствовать файлу на GitHub-e, когда даешь команду   go mod tidy   приложение подтягивает оттуда зависимости
+////
 сгенерировал файлы
 protoc --go_out=. --go_opt=paths=source_relative     --go-grpc_out=. --go-grpc_opt=paths=source_relative     proto/grpc.proto  
 go mod tidy

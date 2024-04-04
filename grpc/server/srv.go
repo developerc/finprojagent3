@@ -33,6 +33,7 @@ func NewServer() *Server {
 
 func (s *Server) SendTask(ctx context.Context, task *pb.Task) (*pb.Task, error) {
 	fmt.Println("Get Task:  ", task)
+	task.Status = "in_progress"
 	return task, nil
 }
 

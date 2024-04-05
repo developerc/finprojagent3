@@ -58,6 +58,9 @@ func CreateOrchGRPCserver() {
 	MaxTasks = 2
 	RegisteredAgentMap = make(map[int]Agent)
 	RegisteredTaskMap = make(map[int32]*pb.Task)
+	go CheckPushSovedTask()
+
+	//изменить значения host port !!
 	host := "localhost"
 	port := "5001"
 

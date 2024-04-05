@@ -93,3 +93,7 @@ func RegisterAgent() {
 func GetAgentId() int {
 	return agent.Id
 }
+
+func GetOrchestrator() Orchestrator {
+	return orchestrator
+}

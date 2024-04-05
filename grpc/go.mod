@@ -3,6 +3,7 @@ module grpc
 go 1.22.1
 
 require (
+	github.com/dengsgo/math-engine v0.0.0-20230823154425-78f211b48149
 	github.com/developerc/finprojagent3 v0.0.0-20240402183129-58e50ab8a7eb
 	google.golang.org/grpc v1.62.1
 )

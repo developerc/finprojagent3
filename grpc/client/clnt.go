@@ -89,3 +89,7 @@ func RegisterAgent() {
 	agent.Id = int(idAgent.GetId())
 	fmt.Println("idAgent: ", agent.Id)
 }
+
+func GetAgentId() int {
+	return agent.Id
+}

@@ -30,3 +30,9 @@ go mod tidy
 в файле go.mod
 replace grpc => ./grpc/
 ~/proj/Go/Exam/finprojagent3$ go get grpc
+
+cd grpc
+go get github.com/dengsgo/math-engine/engine
+go mod tidy
+cd ..
+go mod tidy

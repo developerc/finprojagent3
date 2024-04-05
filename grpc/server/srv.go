@@ -2,7 +2,9 @@ package server
 
 import (
 	"context"
+	"errors"
 	"fmt"
+	"grpc/client"
 	"log"
 	"net"
 	"os"
@@ -14,6 +16,7 @@ import (
 
 var RegisteredAgentMap map[int]Agent //хранилище зарегистрированных агентов
 var IdAgent int                      //счетчик ID агента
+var MaxTasks int                     //максимальное количество одновременно выполняемых задач
 var mutex sync.Mutex
 
 type Agent struct {
@@ -34,9 +37,13 @@ func NewServer() *Server {
 func (s *Server) SendTask(ctx context.Context, task *pb.Task) (*pb.Task, error) {
 	fmt.Println("Get Task:  ", task)
 	task.Status = "in_progress"
-	return task, nil
-}
+	task.Agentid = int32(client.GetAgentId())
+	if ok := HandleSendTask(task); ok {
+		return task, nil
+	}
 
+	return nil, errors.New("agent can't to receive task")
+}
 func (s *Server) PushFinishTask(ctx context.Context, task *pb.Task) (*pb.Task, error) {
 
 	return task, nil
@@ -47,23 +54,10 @@ func (s *Server) HBreq(ctx context.Context, heartBit *pb.HeartBit) (*pb.HeartBit
 	return &pb.HeartBitResp{}, nil
 }
 
-// обрабатываем запрос на регистрацию агента
-/*func (s *Server) RegisterNewAgent(ctx context.Context, in *pb.AgentParams) (*pb.AgentParamsResponse, error) {
-	var agent Agent = Agent{}
-
-	mutex.Lock()
-	IdAgent++
-	agent.Id = IdAgent
-	agent.Ip = in.Ip
-	agent.Port = int(in.Port)
-	RegisteredAgentMap[IdAgent] = agent
-	mutex.Unlock()
-	log.Println("RegisteredAgentMap: ", RegisteredAgentMap)
-	return &pb.AgentParamsResponse{Id: int32(IdAgent)}, nil
-}*/
-
 func CreateOrchGRPCserver() {
+	MaxTasks = 2
 	RegisteredAgentMap = make(map[int]Agent)
+	RegisteredTaskMap = make(map[int32]*pb.Task)
 	host := "localhost"
 	port := "5001"
 

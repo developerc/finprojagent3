@@ -19,3 +19,11 @@ func TestReadSettings(t *testing.T) {
 		t.Error("not valid settings agent!")
 	}
 }
+
+// тест проверяется при запущенном оркестраторе
+func TestRegisterAgent(t *testing.T) {
+	RegisterAgent()
+	if agent.Id == 0 {
+		t.Error("not success register agent!")
+	}
+}

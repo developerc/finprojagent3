@@ -20,7 +20,6 @@ func testSolveTaskInValid(t *testing.T) {
 	task.Status = "in_progress"
 	task.Expr = "2+3"
 	solveTask(&task)
-	//time.Sleep(35 * time.Second)
 	fmt.Println("RegisteredTaskMap: ", RegisteredTaskMap)
 	res := RegisteredTaskMap[1]
 	if res.Result == float32(15) {

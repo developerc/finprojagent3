@@ -1,48 +1,18 @@
-создал папку finprojagent3 для финального проекта
-установил плагины
-go install google.golang.org/protobuf/cmd/protoc-gen-go@v1.28
-go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@v1.2
-export PATH="$PATH:$(go env GOPATH)/bin"
-C:\proj\Go\Exam\finprojorchestr2> go mod init github.com/developerc/finprojagent3
-создал папку proto и grpc
-mkdir proto
-mkdir grpc
-в папке proto создал файл grpc.proto
-создал файлы 
-grpc/client/clnt.go
-grpc/server/srv.go
-залил на github
-////
-Важно!! в файле grpc.proto строка 2
-package finproj; // название пакета
-должна совпадать со строкой в файле grpc.proto на оркестраторе, иначе запросы от агента не доходят до оркестратора даже при правильных IP и port
-и строка 3
-option go_package = "github.com/developerc/finprojagent3/proto";
-должна соответствовать файлу на GitHub-e, когда даешь команду   go mod tidy   приложение подтягивает оттуда зависимости
-////
-сгенерировал файлы
-protoc --go_out=. --go_opt=paths=source_relative     --go-grpc_out=. --go-grpc_opt=paths=source_relative     proto/grpc.proto  
-go mod tidy
-cd grpc
-C:\proj\Go\Exam\finprojorchestr3\grpc> go mod init grpc
-заполнил srv.go и подтянул зависимости
-go mod tidy
-в файле go.mod
-replace grpc => ./grpc/
-~/proj/Go/Exam/finprojagent3$ go get grpc
-
-cd grpc
-go get github.com/dengsgo/math-engine/engine
-go mod tidy
-cd ..
-go mod tidy
-
-
-go test
-    -v — выводит подробную информацию о тестах
-    go clean — очищает кеш результатов тестов
-    -count=1 — запускает тесты нужное количество раз
-    -run — запускает тесты по имени
-    ./... — запускает тесты во всех пакетах внутри текущего модуля
-    -cover — выводит информацию о покрытии кода тестами
-
+Финальный проект курса обучения Яндекса программированию на языке Go.  
+Часть вторая. Агент.  
+Клонируем в отдельную папку проект  
+git clone https://github.com/developerc/finprojagent3.git  
+Переходим в папку  
+cd finprojagent3  
+Создаем исполняемый файл  
+go build  
+Перед первым запуском агента подготовим настроечный файл settings.txt который должен лежать рядом с исполняемым файлом.  
+При запуске приложения оно читает из файла настройки: первая строка для оркестратора, вторая для агента.  
+gRPC сервер оркестратора запускается по умолчанию на порту 5000. Порт агента должен отличаться, например первого агента  
+можно запустить на порту 5001, второго на 5002 и т.д. Для запуска нескольких агентов скопировать исполняемый файл в разные  
+папки, положить рядом настроечный файл, изменить номер порта. Первым запускать оркестратор, потом агенты по очереди.  
+Для вычисления математического выражения использую библиотеку "github.com/dengsgo/math-engine/engine" которая вычисляет  
+все основные арифметические операции.  
+Для обмена сообщениями используется протокол gRPC. На стороне агента запускается сервер для приема сообщений от оркестратора.  
+Агент так же подключается к серверу оркестратора.  
+Разработаны модульные тесты для проверки работы основных функций.  

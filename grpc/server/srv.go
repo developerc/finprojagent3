@@ -61,10 +61,10 @@ func CreateOrchGRPCserver() {
 	go CheckPushSovedTask()
 
 	//изменить значения host port !!
-	host := "localhost"
-	port := "5001"
+	host := client.GetAgent().Ip   //agent.Ip   //"localhost"
+	port := client.GetAgent().Port //agent.Port //"5001"
 
-	addr := fmt.Sprintf("%s:%s", host, port)
+	addr := fmt.Sprintf("%s:%d", host, port)
 	lis, err := net.Listen("tcp", addr) // будем ждать запросы по этому адресу
 
 	if err != nil {

@@ -94,6 +94,10 @@ func GetAgentId() int {
 	return agent.Id
 }
 
+func GetAgent() Agent {
+	return agent
+}
+
 func GetOrchestrator() Orchestrator {
 	return orchestrator
 }

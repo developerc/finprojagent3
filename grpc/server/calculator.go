@@ -21,7 +21,7 @@ func CheckPushSovedTask() {
 		time.Sleep(1 * time.Second)
 		for k, task := range RegisteredTaskMap {
 			if task.Status != "in_progress" {
-				fmt.Println("finished task: ", k, task)
+				//fmt.Println("finished task: ", k, task)
 				if successPushTask(task) {
 					mutex.Lock()
 					delete(RegisteredTaskMap, k)

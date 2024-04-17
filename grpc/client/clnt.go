@@ -49,7 +49,7 @@ func readSettings(settingsFile string) {
 				fmt.Println("error unmarshal settings!")
 				return
 			}
-			fmt.Println(orchestrator)
+			//fmt.Println(orchestrator)
 		case 1:
 			//применяем настройки агента, записанные в файле
 			err := json.Unmarshal([]byte(str), &agent)
@@ -57,7 +57,7 @@ func readSettings(settingsFile string) {
 				fmt.Println("error unmarshal settings!")
 				return
 			}
-			fmt.Println(agent)
+			//fmt.Println(agent)
 		}
 		numLine++
 	}
